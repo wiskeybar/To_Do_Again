@@ -122,7 +122,16 @@ button {
   margin-top: 2vh;
   -ms-flex-line-pack: stretch;
       align-content: stretch;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
   overflow-y: scroll;
+  scroll-behavior: smooth;
+  max-height: 50vh;
+  scrollbar-width: none;
+}
+
+.tasks::-webkit-scrollbar {
+  width: 0;
 }
 
 .tasks_Name, .tasks_Deadline, .tasks_Priority {

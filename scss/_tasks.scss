@@ -4,8 +4,16 @@
     justify-content: space-around;
     margin-top: 2vh;
     align-content: stretch;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
     overflow-y: scroll;
+    scroll-behavior: smooth;
+    max-height: 50vh;
+    scrollbar-width: none;
 
+    &::-webkit-scrollbar {
+        width: 0;
+    }
 
     &_Name,
     &_Deadline,
