@@ -1,0 +1,32 @@
+body {
+    background-color: gray;
+
+}
+
+.wrapper {
+    position: relative;
+    border-radius: 3%;
+    max-width: 700px;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.753);
+    display: grid;
+    grid-template-areas: 'title title'
+        'menu menu'
+        'content content'
+        'foot foot';
+}
+
+button {
+    padding: 1vh 2vw;
+    border-radius: 5% / 25%;
+    background-color: transparent;
+    border: 1px solid black;
+    margin: 0.2vw;
+}
+
+
+
+.title {
+    grid-area: title;
+    text-align: center;
+}

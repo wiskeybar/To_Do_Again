@@ -1,0 +1,64 @@
+.menu {
+    grid-area: menu;
+}
+
+.head {
+    text-align: center;
+}
+
+.searchbar {
+    margin: 1vh auto;
+}
+
+.weeks {
+    display: flex;
+    justify-content: center;
+    margin: 1vw;
+}
+
+.thisWeek {
+    background-color: rgba(128, 51, 0, 0.5);
+}
+
+.nextWeek {
+    background-color: rgba(4, 0, 255, 0.5);
+}
+
+.laterWeeks {
+    background-color: rgba(9, 255, 0, 0.5);
+}
+
+/*  */
+.sorting {
+    display: flex;
+    justify-content: center;
+}
+
+.sortyBy {
+    margin: 0 .3vw;
+}
+
+.deadline {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+
+.priority {
+    background-color: rgba(174, 0, 255, 0.5);
+}
+
+.headlines {
+    display: flex;
+    justify-content: center;
+
+    &__Name {
+        margin: 0.5vw;
+    }
+
+    &__Priority {
+        margin: 0.5vw;
+    }
+
+    &__Deadline {
+        margin: 0.5vw;
+    }
+}

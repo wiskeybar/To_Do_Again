@@ -1,0 +1,9 @@
+.foot {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    grid-area: foot;
+    background-color: rgba(128, 128, 128, 0.75)
+}

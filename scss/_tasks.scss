@@ -1,0 +1,57 @@
+.tasks {
+    grid-area: content;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2vh;
+    align-content: stretch;
+    overflow-y: scroll;
+
+
+    &_Name,
+    &_Deadline,
+    &_Priority {
+        border: 1px solid green;
+
+        &__Header {
+            text-align: center;
+        }
+
+        .userTask {
+            border: 1px solid blue;
+            margin: 0.3vh 0.2vw;
+        }
+    }
+
+    &_Name {
+        flex-basis: 63.3%;
+        border-radius: 3%;
+
+        .userTask {
+            border-radius: 2% / 15%;
+            padding-left: 0.5vw;
+
+        }
+
+    }
+
+    &_Deadline {
+        flex-basis: 15.15%;
+        border-radius: 10% / 2%;
+
+        .userTask {
+            border-radius: 5% / 25%;
+            text-align: center;
+        }
+    }
+
+    &_Priority {
+        flex-basis: 15.15%;
+        border-radius: 10% / 2%;
+
+        .userTask {
+            border-radius: 5% / 25%;
+            text-align: center;
+
+        }
+    }
+}
