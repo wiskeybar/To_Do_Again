@@ -1,65 +1,139 @@
 .tasks {
-    grid-area: content;
+    position: relative;
     display: flex;
-    justify-content: space-around;
-    margin-top: 2vh;
-    align-content: stretch;
-    overflow: -moz-scrollbars-none;
+    flex-direction: column;
+    margin: 2vh 1vw;
+    height: 50vh;
     -ms-overflow-style: none;
-    overflow-y: scroll;
     scroll-behavior: smooth;
-    max-height: 50vh;
     scrollbar-width: none;
+    overflow: -moz-scrollbars-none;
+    overflow-y: scroll;
+
 
     &::-webkit-scrollbar {
         width: 0;
     }
 
-    &_Name,
-    &_Deadline,
-    &_Priority {
-        border: 1px solid green;
+    &_headlines {
+        display: flex;
+        justify-content: space-between;
+        text-align: center;
+        position: sticky;
+        width: 100%;
+        top: 0;
+        color: var(--secondary-dark);
+        margin-bottom: 50px;
 
-        &__Header {
-            text-align: center;
+        &::after {
+            position: absolute;
+            display: block;
+            background-color: var(--text-main);
+            height: 50px;
+            width: 100%;
+            content: '';
+            z-index: -1;
+
         }
 
-        .userTask {
-            border: 1px solid blue;
-            margin: 0.3vh 0.2vw;
+
+
+
+        &__Taskname {
+            flex-basis: 45%;
+            border-radius: 3%;
         }
+
+        &__Deadline,
+        &__Priority,
+        &__Edit {
+            flex-basis: 15.15%;
+            border-radius: 10% / 2%;
+
+        }
+
+        &__Edit {
+            flex-basis: auto;
+        }
+
+        @media (max-height:414px) {
+            max-width: 90vw;
+
+        }
+
     }
 
-    &_Name {
-        flex-basis: 63.3%;
-        border-radius: 3%;
+    &_usertask {
+        display: flex;
+        min-height: 3.5vh;
+        justify-content: space-between;
+        margin-top: 0.2vh;
+        line-height: 3.5vh;
 
-        .userTask {
-            border-radius: 2% / 15%;
-            padding-left: 0.5vw;
+        &__Title {
+            display: block;
+            flex-basis: 50%;
+            border-radius: 3% / 10%;
+            border: 1px solid black;
 
+            &:hover {
+                background-color: var(--secondary-light);
+                color: var(--text-main);
+                cursor: pointer;
+            }
         }
 
-    }
-
-    &_Deadline {
-        flex-basis: 15.15%;
-        border-radius: 10% / 2%;
-
-        .userTask {
-            border-radius: 5% / 25%;
-            text-align: center;
+        @media (max-height:414px) {
+            min-height: 7vh;
+            line-height: 7vh;
+            max-width: 90vw;
         }
-    }
 
-    &_Priority {
-        flex-basis: 15.15%;
-        border-radius: 10% / 2%;
 
-        .userTask {
-            border-radius: 5% / 25%;
+        &__Deadline {
+            display: block;
+            flex-basis: 13%;
+            border-radius: 3% / 20%;
             text-align: center;
+            border: 1px solid black;
+        }
 
+        &__Priority {
+            display: block;
+            flex-basis: 13%;
+            border-radius: 3% / 20%;
+            text-align: center;
+            border: none;
+            max-height: 100%;
+            padding: 0;
+            align-self: center;
+        }
+
+        &__Edit {
+            width: 4vh;
+            height: 4vh;
+            text-align: center;
+            border: 1px solid black;
+            border: none;
+
+            border-radius: 50%;
+
+            &:hover {
+                background-color: var(--secondary-light);
+                color: var(--text-main);
+                cursor: pointer
+            }
+
+            i {
+                display: block;
+                max-height: 100%;
+                max-width: 100%;
+                line-height: 4vh;
+            }
+        }
+
+        &__Description {
+            display: none;
         }
     }
 }

@@ -1,64 +1,97 @@
-.menu {
-    grid-area: menu;
-}
-
-.head {
-    text-align: center;
-}
-
-.searchbar {
-    margin: 1vh auto;
-}
-
-.weeks {
+.searchfield {
+    border: 1px solid var(--secondary);
+    border-radius: 3% /20%;
+    margin: 2vh auto;
     display: flex;
     justify-content: center;
-    margin: 1vw;
+    width: 33%;
+    background-color: white;
+
+    &:focus-within {
+        background-color: var(--secondary-light);
+        box-shadow: 0 0 2px var(--secondary);
+        color: var(--text-main)
+    }
+
+    .searchbar {
+        max-width: 70%;
+        display: block;
+    }
+
+    i {
+        cursor: pointer;
+    }
 }
 
-.thisWeek {
-    background-color: rgba(128, 51, 0, 0.5);
-}
-
-.nextWeek {
-    background-color: rgba(4, 0, 255, 0.5);
-}
-
-.laterWeeks {
-    background-color: rgba(9, 255, 0, 0.5);
-}
 
 /*  */
 .sorting {
-    display: flex;
-    justify-content: center;
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-areas: 'sorting col2a col3a col4a removeFilter'
+        'sorting col2b col3b col4b removeFilter'
 }
 
 .sortyBy {
     margin: 0 .3vw;
+    grid-area: sorting;
+    align-self: center;
+    justify-self: center;
+    text-transform: uppercase;
+}
+
+.thisWeek {
+    background-color: var(--main-light);
+    grid-area: col2a;
+}
+
+.nextWeek {
+    background-color: var(--main-light);
+    grid-area: col3a;
+
+}
+
+.laterWeeks {
+    background-color: var(--main-light);
+    grid-area: col4a;
+
+}
+
+.name {
+    background-color: var(--main-dark);
+    grid-area: col2b;
+    color: var(--text-main)
 }
 
 .deadline {
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: var(--main-dark);
+    grid-area: col3b;
+    color: var(--text-main)
 }
 
 .priority {
-    background-color: rgba(174, 0, 255, 0.5);
+    background-color: var(--main-dark);
+    grid-area: col4b;
+    color: var(--text-main)
 }
 
-.headlines {
-    display: flex;
-    justify-content: center;
+.clear {
+    grid-area: removeFilter;
+    align-self: center;
+    justify-self: center;
 
-    &__Name {
-        margin: 0.5vw;
+    &:hover {
+        color: var(--secondary-dark)
     }
+}
 
-    &__Priority {
-        margin: 0.5vw;
-    }
-
-    &__Deadline {
-        margin: 0.5vw;
-    }
+.thisWeek,
+.nextWeek,
+.laterWeeks,
+.name,
+.deadline,
+.priority,
+.clear {
+    cursor: pointer;
 }
