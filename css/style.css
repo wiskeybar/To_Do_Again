@@ -110,6 +110,16 @@ div {
   grid-area: foot;
 }
 
+.head {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
 .searchfield {
   border: 1px solid var(--secondary);
   border-radius: 3% /20%;
@@ -117,15 +127,15 @@ div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 33%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   background-color: white;
+  justify-self: center;
 }
 
 .searchfield:focus-within {
-  background-color: var(--secondary-light);
+  background-color: var(--main);
   -webkit-box-shadow: 0 0 2px var(--secondary);
           box-shadow: 0 0 2px var(--secondary);
   color: var(--text-main);
@@ -134,6 +144,10 @@ div {
 .searchfield .searchbar {
   max-width: 70%;
   display: block;
+}
+
+.searchfield .searchbar:focus {
+  color: var(--text-main);
 }
 
 .searchfield i {
@@ -266,7 +280,6 @@ div {
   text-align: center;
   position: -webkit-sticky;
   position: sticky;
-  width: 100%;
   top: 0;
   color: var(--secondary-dark);
   margin-bottom: 50px;
@@ -322,7 +335,6 @@ div {
   -ms-flex-preferred-size: 50%;
       flex-basis: 50%;
   border-radius: 3% / 10%;
-  border: 1px solid black;
 }
 
 .tasks_usertask__Title:hover {
@@ -345,7 +357,6 @@ div {
       flex-basis: 13%;
   border-radius: 3% / 20%;
   text-align: center;
-  border: 1px solid black;
 }
 
 .tasks_usertask__Priority {
@@ -366,7 +377,6 @@ div {
   width: 4vh;
   height: 4vh;
   text-align: center;
-  border: 1px solid black;
   border: none;
   border-radius: 50%;
 }
@@ -420,14 +430,14 @@ div {
           box-shadow: 0 0 2px var(--secondary-dark);
 }
 
-.addtask input {
+.addtask input:focus {
   color: var(--text-main);
 }
 
-.addtask .add,
-.addtask .settings {
+.addtask .add {
   background-color: var(--secondary-dark);
   color: var(--text-main);
+  cursor: pointer;
 }
 
 .popup {
@@ -440,6 +450,7 @@ div {
   height: 100%;
   background-color: white;
   z-index: 1;
+  padding: 3px;
   display: -ms-grid;
   display: grid;
   grid-gap: 5px;
@@ -455,16 +466,46 @@ div {
   -ms-grid-column-span: 2;
   grid-area: title;
   font-size: 30px;
-  color: var(--text-main);
+  color: var(--main-dark);
   font-family: var(--oswald);
+  border-bottom: 3px solid black;
+  border-radius: 0;
+}
+
+.popup .tasks_usertask__Title:hover {
+  background-color: transparent;
+}
+
+.popup .tasks_usertask__Title:focus {
+  background-color: var(--main-dark);
+  color: var(--text-main);
 }
 
 .popup .tasks_usertask__Deadline {
   font-size: 20px;
+  position: relative;
   -ms-grid-row: 2;
   -ms-grid-row-span: 2;
   -ms-grid-column: 1;
   grid-area: deadline;
+  color: var(--text-main);
+  background-color: var(--main-dark);
+  border-radius: 2% / 5%;
+}
+
+.popup .tasks_usertask__Deadline::before {
+  content: "DEADLINE";
+  font-size: 13px;
+  display: block;
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.popup .tasks_usertask__Deadline:focus {
+  background-color: var(--main-dark);
   color: var(--text-main);
 }
 
@@ -472,17 +513,18 @@ div {
   -ms-grid-row: 3;
   -ms-grid-column: 2;
   grid-area: priority;
+  width: 100%;
+  height: 100%;
+  background-color: var(--main-dark);
+  color: var(--text-main);
 }
 
 .popup .tasks_usertask__PriorityLabel {
   -ms-grid-row: 2;
   -ms-grid-column: 2;
   grid-area: prioritylabel;
-  color: var(--text-main);
+  color: var(--main-dark);
   text-align: center;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
 }
 
 .popup .tasks_usertask__Edit {
@@ -495,11 +537,25 @@ div {
   position: absolute;
   right: 10%;
   bottom: 20%;
+  color: var(--main-dark);
 }
 
 .popup .tasks_usertask__Edit i {
   line-height: 5vh;
   font-size: 3vh;
+}
+
+.popup .tasks_usertask__Edit i:hover {
+  background-color: var(--main-dark);
+  color: var(--text-main);
+  border-radius: 50%;
+}
+
+.popup .tasks_usertask__Edit i::after {
+  content: 'SAVE';
+  display: block;
+  font-size: 15px;
+  color: var(--main-dark);
 }
 
 .popup .tasks_usertask__Description {
@@ -508,13 +564,16 @@ div {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-area: description;
-  color: var(--text-main);
+  color: var(--main-dark);
   font-family: var(--lato);
   display: block;
   padding: 5%;
+  border-top: 3px solid black;
+  border-bottom: 3px solid black;
 }
 
 .popup .tasks_usertask__Description:focus {
-  background-color: var(--secondary-light);
+  background-color: var(--main-dark);
+  color: var(--text-main);
 }
 /*# sourceMappingURL=style.css.map */

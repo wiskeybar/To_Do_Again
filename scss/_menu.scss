@@ -1,21 +1,34 @@
+.head {
+    display: flex;
+    flex-direction: column;
+}
+
 .searchfield {
     border: 1px solid var(--secondary);
     border-radius: 3% /20%;
     margin: 2vh auto;
     display: flex;
-    justify-content: center;
-    width: 33%;
+    align-items: center;
     background-color: white;
+    justify-self: center;
+
+
 
     &:focus-within {
-        background-color: var(--secondary-light);
+        background-color: var(--main);
         box-shadow: 0 0 2px var(--secondary);
-        color: var(--text-main)
+        color: var(--text-main);
+
     }
 
     .searchbar {
         max-width: 70%;
         display: block;
+
+        &:focus {
+            color: var(--text-main);
+
+        }
     }
 
     i {

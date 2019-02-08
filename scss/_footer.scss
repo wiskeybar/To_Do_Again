@@ -22,13 +22,16 @@
     }
 
     input {
-        color: var(--text-main)
+
+        &:focus {
+            color: var(--text-main)
+        }
     }
 
-    .add,
-    .settings {
+    .add {
         background-color: var(--secondary-dark);
-        color: var(--text-main)
+        color: var(--text-main);
+        cursor: pointer;
     }
 
 

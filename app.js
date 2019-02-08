@@ -1,5 +1,6 @@
 const
     wrapper = document.querySelector('.wrapper')
+searchfield = document.querySelector('.searchfield')
 searchbar = document.querySelector('.searchbar'),
     searchBtn = document.querySelector('.fa-search'),
 
@@ -14,7 +15,8 @@ searchbar = document.querySelector('.searchbar'),
     addOwnTask = document.querySelector('.addOwnTask'),
     addBtn = document.querySelector('.add'),
 
-    taskContainer = document.querySelector('.tasks'),
+    allTasks = Array.from(document.querySelectorAll('.tasks_usertask'))
+taskContainer = document.querySelector('.tasks'),
     taskTitle = document.querySelector('.tasks_usertask__Title'),
     taskDeadline = document.querySelector('.tasks_usertask__Deadline'),
     taskPriority = document.querySelector('.tasks_usertask__Priority'),
@@ -52,8 +54,8 @@ weekFilters.forEach(weekFilter => weekFilter.addEventListener('click', (e) => {
 clearFilterBtn.addEventListener('click', () => {
     basicFilters.forEach(filter => { filter.style.opacity = "1"; filter.style.boxShadow = "none" });
     weekFilters.forEach(filter => { filter.style.opacity = "1"; filter.style.boxShadow = "none" });
+    allTasks.forEach(task => task.style.display = "flex")
 })
-
 
 let createTask = (name, deadline, priority, description, id) => {
     const task_container = document.createElement("div");
@@ -77,7 +79,7 @@ let createTask = (name, deadline, priority, description, id) => {
     task_container.appendChild(task_name);
 
     task_deadline.type = "div";
-    task_deadline.textContent = `${deadline[8]}${deadline[9]}.${deadline[5]}${deadline[6]}.${deadline[0]}${deadline[1]}${deadline[2]}${deadline[3]}`;
+    task_deadline.textContent = `${deadline[8]}${deadline[9]}/${deadline[5]}${deadline[6]}/${deadline[0]}${deadline[1]}${deadline[2]}${deadline[3]}`;
     task_deadline.className = "tasks_usertask__Deadline";
     task_container.appendChild(task_deadline);
 
@@ -141,8 +143,6 @@ let createTask = (name, deadline, priority, description, id) => {
 
 }
 
-
-
 let editPopup = function (parent, currentPriority, currentTitle, currentDescription, id) {
     let popup = document.createElement('div');
     popup.innerHTML = parent.innerHTML;
@@ -204,7 +204,7 @@ let editPopup = function (parent, currentPriority, currentTitle, currentDescript
         let editedDescription = editedTask.querySelector('.tasks_usertask__Description');
         let newDeadline = dateInput.value
         editedName.value = nameDisplay.value;
-        editedDeadline.textContent = `${newDeadline[8]}${newDeadline[9]}.${newDeadline[5]}${newDeadline[6]}.${newDeadline[0]}${newDeadline[1]}${newDeadline[2]}${newDeadline[3]}`;
+        editedDeadline.textContent = `${newDeadline[8]}${newDeadline[9]}/${newDeadline[5]}${newDeadline[6]}/${newDeadline[0]}${newDeadline[1]}${newDeadline[2]}${newDeadline[3]}`;
         editedPriority.value = priorityDisplay.value;
         if (editedPriority.value === "HIGH") {
             editedPriority.style.backgroundColor = "red"
@@ -228,11 +228,9 @@ let editPopup = function (parent, currentPriority, currentTitle, currentDescript
 
 }
 
-
-
-
 addBtn.addEventListener('click', () => {
     let createPopup = document.createElement('div');
+
     createPopup.className = "popup"
     const task_name = document.createElement("input");
     const task_priority = document.createElement("select");
@@ -246,12 +244,14 @@ addBtn.addEventListener('click', () => {
 
     task_name.type = "text";
     task_name.placeholder = "Place for your title"
+    task_name.value = addOwnTask.value;
     task_name.className = "tasks_usertask__Title";
 
     createPopup.appendChild(task_name);
 
     task_deadline.className = "tasks_usertask__Deadline";
     task_deadline.type = "date"
+    task_deadline.value = new Date().toISOString().slice(0, 10);
     createPopup.appendChild(task_deadline);
 
     task_priority.className = "tasks_usertask__Priority";
@@ -271,6 +271,7 @@ addBtn.addEventListener('click', () => {
     task_priority.appendChild(task_priority_normal)
     task_priority.appendChild(task_priority_low)
     task_priority.style.color = "white"
+    task_priority.value = "NORMAL"
     if (task_priority.value === "HIGH") {
 
         task_priority.style.backgroundColor = "red"
@@ -292,11 +293,6 @@ addBtn.addEventListener('click', () => {
         if (e.target.value == "LOW") {
             e.target.style.backgroundColor = "green"
         }
-
-
-
-
-
     })
 
     task_description.className = "tasks_usertask__Description"
@@ -307,15 +303,79 @@ addBtn.addEventListener('click', () => {
     task_edit.innerHTML = '<i class="fas fa-pencil-alt"></i>';
     createPopup.appendChild(task_edit)
     task_edit.addEventListener('click', () => {
-        if (task_name.value && task_deadline.value && task_priority.value && task_description.value) {
+        if (task_name.value && task_deadline.value && task_priority.value) {
+            if (task_description.value === "") {
+                task_description.value = "No description has been added"
+            }
             createTask(task_name.value, task_deadline.value, task_priority.value, task_description.value, new Date().getTime())
             createPopup.remove()
         }
         else {
-            alert('please specify title, date, priority and provide a brief description')
+            alert('Please specify the Title of your task.')
         }
     })
 
     wrapper.appendChild(createPopup)
 
+    addOwnTask.value = ""
 })
+
+const commenceSearch = (e) => {
+    if (e.keyCode === 13 || e.type === 'click') {
+        const allTasks = Array.from(document.querySelectorAll('.tasks_usertask__Title'));
+        const searchedTasks = allTasks.filter(task => task.value.includes(searchbar.value));
+        allTasks.forEach(task => task.parentNode.style.display = "none");
+        searchedTasks.forEach(task => task.parentNode.style.display = "flex")
+        searchbar.value = "";
+        if (!(document.querySelector('.clearSearchBtn'))) {
+            const clearSearchBtn = document.createElement('div');
+            clearSearchBtn.className = "clearSearchBtn"
+            clearSearchBtn.innerHTML = ' <i style="display:block;padding:1vh;" class="fas fa-times"></i>';
+            searchfield.appendChild(clearSearchBtn)
+            clearSearchBtn.addEventListener('click', (e) => {
+                allTasks.forEach(task => task.parentNode.style.display = "flex");
+                e.target.parentNode.remove()
+            })
+        }
+    }
+}
+
+searchbar.addEventListener('keydown', commenceSearch)
+searchBtn.addEventListener('click', commenceSearch)
+
+const weekFilter = (e) => {
+    const deadlines = Array.from(document.querySelectorAll('.tasks_usertask__Deadline'))
+    const today = new Date()
+    today.setHours(0, 0, 0, 0);
+    const currentDate = today.getTime();
+
+    const deadlineCounter = (upto = 2, from = -1) => deadlines.forEach((deadline) => {
+        let deadDate = deadline.textContent.split('/');
+        let deadlineDates = new Date(deadDate[2], deadDate[1] - 1, deadDate[0]).getTime();
+
+        // sidenote = milliseconds to days = milliseconds times 1.6534E-9
+
+        if (((deadlineDates - currentDate) * 1.6534E-9) < upto && ((deadlineDates - currentDate) * 1.6534E-9) > from) {
+            deadline.parentNode.style.display = "flex"
+        }
+        else {
+            deadline.parentNode.style.display = "none"
+        }
+    })
+
+    if (e.target === thisWeekFilter) {
+        deadlineCounter(1, -1)
+    }
+    if (e.target === nextWeekFilter) {
+        deadlineCounter(2, 1)
+    }
+    if (e.target === laterWeeksFilter) {
+        deadlineCounter(Infinity, 2)
+
+    }
+}
+
+
+thisWeekFilter.addEventListener('click', weekFilter)
+nextWeekFilter.addEventListener('click', weekFilter)
+laterWeeksFilter.addEventListener('click', weekFilter)
