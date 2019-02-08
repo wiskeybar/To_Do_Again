@@ -15,11 +15,7 @@ searchbar = document.querySelector('.searchbar'),
     addOwnTask = document.querySelector('.addOwnTask'),
     addBtn = document.querySelector('.add'),
 
-    allTasks = Array.from(document.querySelectorAll('.tasks_usertask'))
-taskContainer = document.querySelector('.tasks'),
-    taskTitle = document.querySelector('.tasks_usertask__Title'),
-    taskDeadline = document.querySelector('.tasks_usertask__Deadline'),
-    taskPriority = document.querySelector('.tasks_usertask__Priority'),
+    taskContainer = document.querySelector('.tasks'),
     taskEditBtn = document.querySelector('.tasks_usertask__Edit');
 
 const basicFilters = [deadlineFilter, nameFilter, priorityFilter];
@@ -52,9 +48,13 @@ weekFilters.forEach(weekFilter => weekFilter.addEventListener('click', (e) => {
 }));
 
 clearFilterBtn.addEventListener('click', () => {
-    basicFilters.forEach(filter => { filter.style.opacity = "1"; filter.style.boxShadow = "none" });
+    allTasks = Array.from(document.querySelectorAll('.tasks_usertask')),
+        basicFilters.forEach(filter => { filter.style.opacity = "1"; filter.style.boxShadow = "none" });
     weekFilters.forEach(filter => { filter.style.opacity = "1"; filter.style.boxShadow = "none" });
-    allTasks.forEach(task => task.style.display = "flex")
+    allTasks.forEach(task => {
+        task.style.display = "flex";
+        task.style.order = "0"
+    })
 })
 
 let createTask = (name, deadline, priority, description, id) => {
@@ -379,3 +379,49 @@ const weekFilter = (e) => {
 thisWeekFilter.addEventListener('click', weekFilter)
 nextWeekFilter.addEventListener('click', weekFilter)
 laterWeeksFilter.addEventListener('click', weekFilter)
+
+const parameterFilter = (e) => {
+    const taskPriority = Array.from(document.querySelectorAll('.tasks_usertask__Priority')),
+        taskTitle = Array.from(document.querySelectorAll('.tasks_usertask__Title')),
+        taskDeadline = Array.from(document.querySelectorAll('.tasks_usertask__Deadline'));
+
+    if (e.target === deadlineFilter) {
+        let dates = {};
+        taskDeadline.forEach(deadline => {
+            dates[deadline.textContent] = deadline.parentNode.id;
+        })
+        let sortedDeadlines = Object.entries(dates).sort()
+        sortedDeadlines.forEach(sorted => {
+            document.getElementById(sorted[1]).style.order = sortedDeadlines.indexOf(sorted)
+        })
+    }
+    if (e.target === nameFilter) {
+        let titles = {};
+        taskTitle.forEach(title => {
+            titles[title.value] = title.parentNode.id;
+        })
+        let sortedTitles = Object.entries(titles).sort()
+        sortedTitles.forEach(sorted => {
+            document.getElementById(sorted[1]).style.order = sortedTitles.indexOf(sorted)
+        })
+    }
+    if (e.target === priorityFilter) {
+        taskPriority.forEach(priority => {
+
+            if (priority.value === "HIGH") {
+                priority.parentNode.style.order = "1"
+            }
+            if (priority.value === "NORMAL") {
+                priority.parentNode.style.order = "2"
+            }
+            if (priority.value === "LOW") {
+                priority.parentNode.style.order = "3"
+            }
+        })
+    }
+}
+
+
+deadlineFilter.addEventListener('click', parameterFilter)
+nameFilter.addEventListener('click', parameterFilter)
+priorityFilter.addEventListener('click', parameterFilter)

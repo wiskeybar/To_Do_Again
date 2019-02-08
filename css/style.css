@@ -338,7 +338,7 @@ div {
 }
 
 .tasks_usertask__Title:hover {
-  background-color: var(--secondary-light);
+  background-color: var(--secondary);
   color: var(--text-main);
   cursor: pointer;
 }
