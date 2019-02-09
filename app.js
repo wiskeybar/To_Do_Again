@@ -14,6 +14,7 @@ searchbar = document.querySelector('.searchbar'),
 
     addOwnTask = document.querySelector('.addOwnTask'),
     addBtn = document.querySelector('.add'),
+    removeAll = document.querySelector('.removeAll'),
 
     taskContainer = document.querySelector('.tasks'),
     taskEditBtn = document.querySelector('.tasks_usertask__Edit');
@@ -51,8 +52,8 @@ weekFilters.forEach(weekFilter => weekFilter.addEventListener('click', (e) => {
 }));
 
 clearFilterBtn.addEventListener('click', () => {
-    allTasks = Array.from(document.querySelectorAll('.tasks_usertask')),
-        basicFilters.forEach(filter => { filter.style.opacity = "1"; filter.style.boxShadow = "none" });
+    const allTasks = Array.from(document.querySelectorAll('.tasks_usertask'));
+    basicFilters.forEach(filter => { filter.style.opacity = "1"; filter.style.boxShadow = "none" });
     weekFilters.forEach(filter => { filter.style.opacity = "1"; filter.style.boxShadow = "none" });
     allTasks.forEach(task => {
         task.style.display = "flex";
@@ -78,7 +79,7 @@ let createTask = (name, deadline, priority, description, id) => {
     taskContainer.appendChild(task_container);
 
     task_name.className = "tasks_usertask__Title";
-    task_name.disabled = true
+    task_name.readOnly = true
     task_name.value = name;
     task_container.appendChild(task_name);
 
@@ -139,40 +140,6 @@ let createTask = (name, deadline, priority, description, id) => {
     task_description.type = "text"
     task_container.appendChild(task_description)
 
-    task_container.addEventListener('click', (e) => {
-
-        if (e.target == task_name) {
-            let activeDescription = document.querySelector('.descriptionPopup')
-
-            if (activeDescription) {
-                activeDescription.remove()
-            }
-
-            const descriptionPopup = document.createElement('div'),
-                descriptionClose = document.createElement('i'),
-                descriptionTitle = document.createElement('h2'),
-                descriptionText = document.createElement('p');
-
-            descriptionPopup.className = 'descriptionPopup';
-            descriptionClose.className = 'fas fa-times descriptionPopup__Close';
-            descriptionTitle.className = 'descriptionPopup__Title';
-            descriptionText.className = 'descriptionPopup__Text';
-
-            descriptionTitle.textContent = task_name.value;
-            descriptionText.textContent = task_description.value;
-            descriptionClose.addEventListener('click', () => descriptionPopup.remove())
-
-
-            descriptionPopup.appendChild(descriptionClose);
-            descriptionPopup.appendChild(descriptionTitle);
-            descriptionPopup.appendChild(descriptionText);
-            wrapper.appendChild(descriptionPopup);
-
-        }
-
-    }
-    )
-
 
     task_edit.addEventListener('click', function () {
         let parent = document.getElementById(this.parentNode.id)
@@ -180,7 +147,55 @@ let createTask = (name, deadline, priority, description, id) => {
         let currentTitle = parent.querySelector('.tasks_usertask__Title').value
         let currentDescription = parent.querySelector('.tasks_usertask__Description').value
         editPopup(parent, currentPriority, currentTitle, currentDescription, id)
-    })
+    });
+
+
+
+    task_name.addEventListener('click', function (e) {
+        let activeDescription = document.querySelector('.descriptionPopup')
+        if (activeDescription) {
+            activeDescription.remove()
+        }
+        const descriptionPopup = document.createElement('div'),
+            descriptionClose = document.createElement('i'),
+            descriptionTitle = document.createElement('h2'),
+            descriptionText = document.createElement('p'),
+            taskRemove = document.createElement('button');
+
+        descriptionPopup.className = 'descriptionPopup';
+        descriptionClose.className = 'fas fa-times descriptionPopup__Close';
+        descriptionTitle.className = 'descriptionPopup__Title';
+        descriptionText.className = 'descriptionPopup__Text';
+        taskRemove.className = 'descriptionPopup__Remove';
+
+
+        descriptionTitle.textContent = task_name.value;
+        descriptionText.textContent = task_description.value;
+        taskRemove.textContent = "remove task";
+        descriptionClose.addEventListener('click', () => descriptionPopup.remove())
+        taskRemove.addEventListener('click', () => {
+            if (confirm('This is permanent, are you sure?')) {
+                task_container.remove()
+                descriptionPopup.remove()
+                window.localStorage.removeItem(id)
+            }
+            else {
+                return
+            }
+        })
+
+        descriptionPopup.appendChild(descriptionClose);
+        descriptionPopup.appendChild(descriptionTitle);
+        descriptionPopup.appendChild(descriptionText);
+        descriptionPopup.appendChild(taskRemove);
+
+        wrapper.appendChild(descriptionPopup);
+
+
+
+    }
+    )
+
 
     const storage = JSON.stringify({ name, deadline, priority, description, id })
 
@@ -270,8 +285,6 @@ let editPopup = function (parent, currentPriority, currentTitle, currentDescript
         const storageDescription = editedDescription.value
         const storageId = editedTask.id
 
-        console.log(storageDeadline)
-
         const storage = JSON.stringify({ storageName, storageDeadline, storagePriority, storageDescription, storageId })
 
         window.localStorage.setItem(storageId, storage)
@@ -279,7 +292,7 @@ let editPopup = function (parent, currentPriority, currentTitle, currentDescript
 
     })
 
-    popup.childNodes.forEach(node => node.disabled = false)
+    popup.childNodes.forEach(node => { node.disabled = false; node.readOnly = false })
 
     wrapper.appendChild(popup)
 
@@ -288,6 +301,7 @@ let editPopup = function (parent, currentPriority, currentTitle, currentDescript
 }
 
 addBtn.addEventListener('click', () => {
+
     let createPopup = document.createElement('div');
 
     createPopup.className = "popup"
@@ -377,6 +391,16 @@ addBtn.addEventListener('click', () => {
     wrapper.appendChild(createPopup)
 
     addOwnTask.value = ""
+})
+removeAll.addEventListener('click', () => {
+    if (window.confirm("this will remove all the tasks, are you sure?")) {
+        const allTasks = Array.from(document.querySelectorAll('.tasks_usertask'));
+        allTasks.forEach(task => task.remove())
+        window.localStorage.clear();
+    }
+    else {
+        return
+    }
 })
 
 const commenceSearch = (e) => {

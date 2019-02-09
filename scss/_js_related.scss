@@ -211,6 +211,20 @@
         }
     }
 
+    &__Remove {
+        position: absolute;
+        left: 3%;
+        top: 3%;
+        color: var(--text-main);
+        background-color: var(--secondary-dark);
+
+        &:hover {
+            color: var(--secondary-dark);
+            background-color: var(--text-main);
+            box-shadow: 0 0 10px inset var(--main)
+        }
+    }
+
 
 
 

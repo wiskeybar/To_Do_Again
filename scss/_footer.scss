@@ -15,6 +15,8 @@
 .addtask {
     border-radius: 3% /20%;
     border: 1px solid var(--secondary);
+    margin-left: auto;
+
 
     &:focus-within {
         background-color: var(--main);
@@ -33,6 +35,16 @@
         color: var(--text-main);
         cursor: pointer;
     }
+}
 
+.removeAll {
+    margin-left: auto;
+    margin-right: 3%;
+    cursor: pointer;
+    color: var(--main-dark);
 
+    &:hover {
+        color: white;
+        background-color: var(--secondary-dark)
+    }
 }

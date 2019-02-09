@@ -423,6 +423,7 @@ div {
 .addtask {
   border-radius: 3% /20%;
   border: 1px solid var(--secondary);
+  margin-left: auto;
 }
 
 .addtask:focus-within {
@@ -439,6 +440,18 @@ div {
   background-color: var(--secondary-dark);
   color: var(--text-main);
   cursor: pointer;
+}
+
+.removeAll {
+  margin-left: auto;
+  margin-right: 3%;
+  cursor: pointer;
+  color: var(--main-dark);
+}
+
+.removeAll:hover {
+  color: white;
+  background-color: var(--secondary-dark);
 }
 
 .popup {
@@ -675,5 +688,20 @@ div {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
   }
+}
+
+.descriptionPopup__Remove {
+  position: absolute;
+  left: 3%;
+  top: 3%;
+  color: var(--text-main);
+  background-color: var(--secondary-dark);
+}
+
+.descriptionPopup__Remove:hover {
+  color: var(--secondary-dark);
+  background-color: var(--text-main);
+  -webkit-box-shadow: 0 0 10px inset var(--main);
+          box-shadow: 0 0 10px inset var(--main);
 }
 /*# sourceMappingURL=style.css.map */
