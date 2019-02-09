@@ -570,6 +570,7 @@ div {
   padding: 5%;
   border-top: 3px solid black;
   border-bottom: 3px solid black;
+  overflow: hidden;
 }
 
 .popup .tasks_usertask__Description:focus {
