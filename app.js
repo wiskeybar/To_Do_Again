@@ -18,6 +18,9 @@ searchbar = document.querySelector('.searchbar'),
     taskContainer = document.querySelector('.tasks'),
     taskEditBtn = document.querySelector('.tasks_usertask__Edit');
 
+
+
+
 const basicFilters = [deadlineFilter, nameFilter, priorityFilter];
 const weekFilters = [thisWeekFilter, nextWeekFilter, laterWeeksFilter]
 
@@ -58,6 +61,7 @@ clearFilterBtn.addEventListener('click', () => {
 })
 
 let createTask = (name, deadline, priority, description, id) => {
+
     const task_container = document.createElement("div");
     const task_name = document.createElement("input");
     const task_priority = document.createElement("select");
@@ -77,6 +81,7 @@ let createTask = (name, deadline, priority, description, id) => {
     task_name.disabled = true
     task_name.value = name;
     task_container.appendChild(task_name);
+
 
     task_deadline.type = "div";
     task_deadline.textContent = `${deadline[8]}${deadline[9]}/${deadline[5]}${deadline[6]}/${deadline[0]}${deadline[1]}${deadline[2]}${deadline[3]}`;
@@ -121,6 +126,8 @@ let createTask = (name, deadline, priority, description, id) => {
         if (e.target.value == "LOW") {
             e.target.style.backgroundColor = "green"
         }
+
+
     })
 
     task_edit.className = "tasks_usertask__Edit";
@@ -132,6 +139,41 @@ let createTask = (name, deadline, priority, description, id) => {
     task_description.type = "text"
     task_container.appendChild(task_description)
 
+    task_container.addEventListener('click', (e) => {
+
+        if (e.target == task_name) {
+            let activeDescription = document.querySelector('.descriptionPopup')
+
+            if (activeDescription) {
+                activeDescription.remove()
+            }
+
+            const descriptionPopup = document.createElement('div'),
+                descriptionClose = document.createElement('i'),
+                descriptionTitle = document.createElement('h2'),
+                descriptionText = document.createElement('p');
+
+            descriptionPopup.className = 'descriptionPopup';
+            descriptionClose.className = 'fas fa-times descriptionPopup__Close';
+            descriptionTitle.className = 'descriptionPopup__Title';
+            descriptionText.className = 'descriptionPopup__Text';
+
+            descriptionTitle.textContent = task_name.value;
+            descriptionText.textContent = task_description.value;
+            descriptionClose.addEventListener('click', () => descriptionPopup.remove())
+
+
+            descriptionPopup.appendChild(descriptionClose);
+            descriptionPopup.appendChild(descriptionTitle);
+            descriptionPopup.appendChild(descriptionText);
+            wrapper.appendChild(descriptionPopup);
+
+        }
+
+    }
+    )
+
+
     task_edit.addEventListener('click', function () {
         let parent = document.getElementById(this.parentNode.id)
         let currentPriority = parent.querySelector('.tasks_usertask__Priority').value
@@ -140,8 +182,12 @@ let createTask = (name, deadline, priority, description, id) => {
         editPopup(parent, currentPriority, currentTitle, currentDescription, id)
     })
 
+    const storage = JSON.stringify({ name, deadline, priority, description, id })
+
+    window.localStorage.setItem(id, storage)
 
 }
+
 
 let editPopup = function (parent, currentPriority, currentTitle, currentDescription, id) {
     let popup = document.createElement('div');
@@ -218,12 +264,25 @@ let editPopup = function (parent, currentPriority, currentTitle, currentDescript
         editedDescription.value = descriptionDisplay.value;
 
         popup.remove()
+        const storageName = editedName.value
+        const storageDeadline = dateInput.value
+        const storagePriority = editedPriority.value;
+        const storageDescription = editedDescription.value
+        const storageId = editedTask.id
+
+        console.log(storageDeadline)
+
+        const storage = JSON.stringify({ storageName, storageDeadline, storagePriority, storageDescription, storageId })
+
+        window.localStorage.setItem(storageId, storage)
+
 
     })
 
     popup.childNodes.forEach(node => node.disabled = false)
 
     wrapper.appendChild(popup)
+
 
 
 }
@@ -383,7 +442,12 @@ laterWeeksFilter.addEventListener('click', weekFilter)
 const parameterFilter = (e) => {
     const taskPriority = Array.from(document.querySelectorAll('.tasks_usertask__Priority')),
         taskTitle = Array.from(document.querySelectorAll('.tasks_usertask__Title')),
-        taskDeadline = Array.from(document.querySelectorAll('.tasks_usertask__Deadline'));
+        taskDeadline = Array.from(document.querySelectorAll('.tasks_usertask__Deadline')),
+        allTasks = Array.from(document.querySelectorAll('.tasks_usertask'));
+    allTasks.forEach(task => {
+        task.style.display = "flex";
+        task.style.order = "0"
+    })
 
     if (e.target === deadlineFilter) {
         let dates = {};
@@ -425,3 +489,14 @@ const parameterFilter = (e) => {
 deadlineFilter.addEventListener('click', parameterFilter)
 nameFilter.addEventListener('click', parameterFilter)
 priorityFilter.addEventListener('click', parameterFilter)
+
+
+
+
+if (window.localStorage.length >= 1) {
+    let tasks = Object.keys(window.localStorage);
+    tasks.forEach(task => {
+        let storedTasks = JSON.parse(window.localStorage.getItem(task))
+        createTask(...(Object.values(storedTasks)))
+    })
+}

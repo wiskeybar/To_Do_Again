@@ -130,3 +130,88 @@
     }
 
 }
+
+.descriptionPopup {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    height: 37%;
+    width: 100%;
+    border-radius: 3%;
+    background-color: var(--main);
+    border: 3px solid var(--main-dark);
+    padding: 1.5vh;
+    box-sizing: border-box;
+    color: var(--text-main);
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    overflow: -moz-scrollbars-none;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+        width: 0;
+    }
+
+    @media(max-width:667px) {
+        height: 45%;
+    }
+
+
+    animation: rollIn 1s ease-in-out forwards;
+
+
+    @keyframes rollIn {
+        0% {
+            right: -100%;
+            opacity: 0;
+        }
+
+
+
+        100% {
+            right: 0;
+            opacity: 1;
+        }
+    }
+
+
+
+
+    &__Title {
+        text-align: center;
+        margin: 1vh 0;
+        text-decoration: underline;
+        text-underline-position: under;
+
+    }
+
+    &__Text {
+        text-align: justify;
+
+    }
+
+    &__Close {
+        font-size: 2em;
+        text-shadow: 0 0 40px var(--main-light);
+        position: sticky;
+        top: 0;
+        left: 95%;
+
+        animation: rotation 30s linear infinite both;
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0)
+            }
+
+            100% {
+                transform: rotate(360deg)
+            }
+        }
+    }
+
+
+
+
+}
