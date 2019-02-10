@@ -1,3 +1,5 @@
+// function names are selfexplanatory
+
 const
     wrapper = document.querySelector('.wrapper')
 searchfield = document.querySelector('.searchfield')
@@ -81,6 +83,7 @@ let createTask = (name, deadline, priority, description, id) => {
     task_name.className = "tasks_usertask__Title";
     task_name.readOnly = true
     task_name.value = name;
+    task_name.title = "Click to see description";
     task_container.appendChild(task_name);
 
 
@@ -94,38 +97,38 @@ let createTask = (name, deadline, priority, description, id) => {
     task_priority.className = "tasks_usertask__Priority";
     task_container.appendChild(task_priority);
     task_priority_high.textContent = "HIGH"
-    task_priority_high.style.backgroundColor = 'red';
+    task_priority_high.style.backgroundColor = 'var(--material-red)';
     task_priority_normal.textContent = "NORMAL"
-    task_priority_normal.style.backgroundColor = 'blue';
+    task_priority_normal.style.backgroundColor = 'var(--material-blue)';
     task_priority_low.textContent = "LOW"
-    task_priority_low.style.backgroundColor = 'green';
+    task_priority_low.style.backgroundColor = 'var(--material-green)';
     task_priority.appendChild(task_priority_high)
     task_priority.appendChild(task_priority_normal)
     task_priority.appendChild(task_priority_low)
     task_priority.style.color = "white"
     if (priority === "HIGH") {
-        task_priority.style.backgroundColor = "red"
+        task_priority.style.backgroundColor = "var(--material-red)"
         task_priority.value = "HIGH"
     }
     if (priority == "NORMAL") {
-        task_priority.style.backgroundColor = "blue"
+        task_priority.style.backgroundColor = "var(--material-blue)"
         task_priority.value = "NORMAL"
 
     }
     if (priority == "LOW") {
-        task_priority.style.backgroundColor = "green"
+        task_priority.style.backgroundColor = "var(--material-green)"
         task_priority.value = "LOW"
 
     }
     task_priority.addEventListener('change', (e) => {
         if (e.target.value === "HIGH") {
-            e.target.style.backgroundColor = "red"
+            e.target.style.backgroundColor = "var(--material-red)"
         }
         if (e.target.value == "NORMAL") {
-            e.target.style.backgroundColor = "blue"
+            e.target.style.backgroundColor = "var(--material-blue)"
         }
         if (e.target.value == "LOW") {
-            e.target.style.backgroundColor = "green"
+            e.target.style.backgroundColor = "var(--material-green)"
         }
 
 
@@ -218,23 +221,23 @@ let editPopup = function (parent, currentPriority, currentTitle, currentDescript
     let priorityDisplay = popup.querySelector('.tasks_usertask__Priority')
     priorityDisplay.value = currentPriority
     if (priorityDisplay.value === "HIGH") {
-        priorityDisplay.style.backgroundColor = "red"
+        priorityDisplay.style.backgroundColor = "var(--material-red)"
     }
     if (priorityDisplay.value == "NORMAL") {
-        priorityDisplay.style.backgroundColor = "blue"
+        priorityDisplay.style.backgroundColor = "var(--material-blue)"
     }
     if (priorityDisplay.value == "LOW") {
-        priorityDisplay.style.backgroundColor = "green"
+        priorityDisplay.style.backgroundColor = "var(--material-green)"
     }
     priorityDisplay.addEventListener('change', (e) => {
         if (e.target.value === "HIGH") {
-            e.target.style.backgroundColor = "red"
+            e.target.style.backgroundColor = "var(--material-red)"
         }
         if (e.target.value == "NORMAL") {
-            e.target.style.backgroundColor = "blue"
+            e.target.style.backgroundColor = "var(--material-blue)"
         }
         if (e.target.value == "LOW") {
-            e.target.style.backgroundColor = "green"
+            e.target.style.backgroundColor = "var(--material-green)"
         }
     })
 
@@ -268,13 +271,13 @@ let editPopup = function (parent, currentPriority, currentTitle, currentDescript
         editedDeadline.textContent = `${newDeadline[8]}${newDeadline[9]}/${newDeadline[5]}${newDeadline[6]}/${newDeadline[0]}${newDeadline[1]}${newDeadline[2]}${newDeadline[3]}`;
         editedPriority.value = priorityDisplay.value;
         if (editedPriority.value === "HIGH") {
-            editedPriority.style.backgroundColor = "red"
+            editedPriority.style.backgroundColor = "var(--material-red)"
         }
         if (editedPriority.value == "NORMAL") {
-            editedPriority.style.backgroundColor = "blue"
+            editedPriority.style.backgroundColor = "var(--material-blue)"
         }
         if (editedPriority.value == "LOW") {
-            editedPriority.style.backgroundColor = "green"
+            editedPriority.style.backgroundColor = "var(--material-green)"
         }
         editedDescription.value = descriptionDisplay.value;
 
@@ -335,11 +338,11 @@ addBtn.addEventListener('click', () => {
     task_priority_label.className = "tasks_usertask__PriorityLabel"
     task_priority_label.textContent = "PRIORITY"
     task_priority_high.textContent = "HIGH"
-    task_priority_high.style.backgroundColor = 'red';
+    task_priority_high.style.backgroundColor = 'var(--material-red)';
     task_priority_normal.textContent = "NORMAL"
-    task_priority_normal.style.backgroundColor = 'blue';
+    task_priority_normal.style.backgroundColor = 'var(--material-blue)';
     task_priority_low.textContent = "LOW"
-    task_priority_low.style.backgroundColor = 'green';
+    task_priority_low.style.backgroundColor = 'var(--material-green)';
     task_priority.appendChild(task_priority_high)
     task_priority.appendChild(task_priority_normal)
     task_priority.appendChild(task_priority_low)
@@ -347,24 +350,24 @@ addBtn.addEventListener('click', () => {
     task_priority.value = "NORMAL"
     if (task_priority.value === "HIGH") {
 
-        task_priority.style.backgroundColor = "red"
+        task_priority.style.backgroundColor = "var(--material-red)"
     }
     if (task_priority.value == "NORMAL") {
-        task_priority.style.backgroundColor = "blue"
+        task_priority.style.backgroundColor = "var(--material-blue)"
     }
     if (task_priority.value == "LOW") {
-        task_priority.style.backgroundColor = "green"
+        task_priority.style.backgroundColor = "var(--material-green)"
     }
 
     task_priority.addEventListener('change', (e) => {
         if (e.target.value === "HIGH") {
-            e.target.style.backgroundColor = "red"
+            e.target.style.backgroundColor = "var(--material-red)"
         }
         if (e.target.value == "NORMAL") {
-            e.target.style.backgroundColor = "blue"
+            e.target.style.backgroundColor = "var(--material-blue)"
         }
         if (e.target.value == "LOW") {
-            e.target.style.backgroundColor = "green"
+            e.target.style.backgroundColor = "var(--material-green)"
         }
     })
 

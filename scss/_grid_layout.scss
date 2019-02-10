@@ -6,7 +6,7 @@
     max-width: 700px;
     margin: 0 auto;
     overflow: hidden;
-    background-color: white;
+    background-color: var(--text-main);
     display: grid;
     grid-template-areas: 'title title'
         'menu menu'

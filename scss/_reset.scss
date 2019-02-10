@@ -2,7 +2,6 @@ body {
     background-color: var(--main-dark);
     margin: 0;
     padding: 0;
-
 }
 
 button {
@@ -46,4 +45,35 @@ input,
 button,
 div {
     font-family: var(--lato)
+}
+
+h1 {
+    @media (min-width: 20em) {
+        font-size: calc(1.125rem + ((1vw - 0.2em) * 0.375));
+    }
+
+    @media (min-width: 120em) {
+        font-size: 1.5em;
+    }
+}
+
+h2 {
+    @media (min-width: 20em) {
+        font-size: calc(1rem + ((1vw - 0.2em) * 0.5));
+    }
+
+    @media (min-width: 120em) {
+        font-size: 1.5em;
+    }
+
+}
+
+h3 {
+    @media (min-width: 320px) {
+        font-size: calc(0.9375rem + ((1vw - 3.2px) * 0.2325));
+    }
+
+    @media (min-width: 1920px) {
+        font-size: 18.72px;
+    }
 }

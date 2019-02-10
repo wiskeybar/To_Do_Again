@@ -6,7 +6,7 @@
     flex-wrap: nowrap;
     justify-content: center;
     grid-area: foot;
-    background-color: white;
+    background-color: var(--text-main);
     z-index: 1;
     border-radius: 3% / 30%;
 
@@ -44,7 +44,7 @@
     color: var(--main-dark);
 
     &:hover {
-        color: white;
+        color: var(--text-main);
         background-color: var(--secondary-dark)
     }
 }
