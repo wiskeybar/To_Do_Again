@@ -456,6 +456,7 @@ div {
 
 .tasks_usertask__Description {
   display: none;
+  width: 100%;
 }
 
 .foot {
